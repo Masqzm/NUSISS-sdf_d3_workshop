@@ -21,7 +21,7 @@ public class CountWordsMain {
         }
 
         //String inFile = args[0];        
-        File inFile = new File(args[0]);  
+        File inFile = new File(args[0]);            // see notes below on when to use String, Path, File
         File inFileStopwords = new File(args[1]);
 
         // Open input file for reading
@@ -103,3 +103,9 @@ public class CountWordsMain {
         System.out.printf("Total unique words in %s (w/o stopwords): %d\n\n", inFile, uniqueWords.keySet().size());
     }
 }
+
+// NOTE: When to use String VS File VS Path in handling files
+// 1. String: Use this if you only need to handle the file path as a simple string without performing file operations.
+// 2. File: Useful for basic file operations but is somewhat outdated.
+// 3. Path: This is the preferred modern approach for file operations. It offers better functionality, error handling, and integration with the java.nio.file package.
+// If you want to perform file operations, using Path is generally recommended
