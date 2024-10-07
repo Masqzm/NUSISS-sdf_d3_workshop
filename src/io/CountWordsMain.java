@@ -1,6 +1,7 @@
-package d3.io;
+package io;
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader; 
 import java.io.IOException;
@@ -8,10 +9,13 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
-// Count total unique words using Map
+// Program to count total unique words using Map
+// Remember to add txt file when running progam! 
+// (e.g. java -cp classes io.CountWordsMain catinthehat.txt)
 public class CountWordsMain {
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        String inFile = args[0];        
+        //String inFile = args[0];        
+        File inFile = new File(args[0]);
 
         // Open input file for reading
         Reader reader = new FileReader(inFile);
