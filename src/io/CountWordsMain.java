@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 // Program to count total unique words using Map
 // Remember to add txt file when running progam! 
 // (e.g. java -cp classes io.CountWordsMain catinthehat.txt)
 public class CountWordsMain {
     public static void main(String[] args) throws FileNotFoundException, IOException {
+        if(args.length <= 0) {
+            System.err.println("Please provide file name!");
+            System.exit(1); // exit code 0 = all good
+        }
+
         //String inFile = args[0];        
         File inFile = new File(args[0]);
 
@@ -58,9 +64,20 @@ public class CountWordsMain {
         reader.close();
 
         System.out.println();
-        // Print the keys set in alphabetical order
-        for (String word : uniqueWords.keySet())
-            System.out.printf("[%s]\t\t\t %d\n", word, uniqueWords.get(word));
+        
+        // Print the keys set
+        // for (String word : uniqueWords.keySet())
+        //     System.out.printf("[%s]\t\t\t %d\n", word, uniqueWords.get(word));
+
+        // Print the keys set in sorted alphabetical order
+        Map<String, Integer> sortedUniqueWords = new TreeMap<>(uniqueWords);
+        for (String word : sortedUniqueWords.keySet())
+            System.out.printf("[%s]\t\t\t %d\n", word, sortedUniqueWords.get(word));
+
+        // More efficient way
+        // for (Map.Entry<String, Integer> entry : sortedUniqueWords.entrySet()) 
+        //     System.out.println("Word: " + entry.getKey() + ", Count: " + entry.getValue());
+        
 
         System.out.printf("Total unique words in %s: %d\n\n", inFile, uniqueWords.keySet().size());
     }
