@@ -10,18 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-// Program to count total unique words using Map
+// Program to count total unique words (excluding stop words) using Map
 // Remember to add txt file when running progam! 
-// (e.g. java -cp classes io.CountWordsMain catinthehat.txt)
+// (e.g. java -cp classes io.CountWordsMain catinthehat.txt stopwords.txt)
 public class CountWordsMain {
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        if(args.length <= 0) {
-            System.err.println("Please provide file name!");
+        if(args.length < 2) {
+            System.err.println("Please provide file name! 2 files are needed, input.txt & stopwords.txt");
             System.exit(1); // exit code 0 = all good
         }
 
         //String inFile = args[0];        
-        File inFile = new File(args[0]);
+        File inFile = new File(args[0]);  
+        File inFileStopwords = new File(args[1]);
 
         // Open input file for reading
         Reader reader = new FileReader(inFile);
@@ -63,8 +64,28 @@ public class CountWordsMain {
         // Close files
         reader.close();
 
+        // Open input file (stopwords list) for reading
+        reader = new FileReader(inFileStopwords);
+        br = new BufferedReader(reader);
+
+        //System.out.println("Stop words");
+
+        while((line = br.readLine()) != null)       // read line if it exists in input file
+        {
+            if(line.isEmpty())
+                continue;
+
+            //System.out.println(line);
+
+            // Remove stopwords
+            uniqueWords.remove(line);
+        }
+        // Close files
+        reader.close();
+
+
         System.out.println();
-        
+
         // Print the keys set
         // for (String word : uniqueWords.keySet())
         //     System.out.printf("[%s]\t\t\t %d\n", word, uniqueWords.get(word));
@@ -78,12 +99,7 @@ public class CountWordsMain {
         // for (Map.Entry<String, Integer> entry : sortedUniqueWords.entrySet()) 
         //     System.out.println("Word: " + entry.getKey() + ", Count: " + entry.getValue());
         
-
-        System.out.printf("Total unique words in %s: %d\n\n", inFile, uniqueWords.keySet().size());
+        //System.out.printf("Total unique words in %s: %d\n\n", inFile, uniqueWords.keySet().size());
+        System.out.printf("Total unique words in %s (w/o stopwords): %d\n\n", inFile, uniqueWords.keySet().size());
     }
 }
-
-
-// TO DO:
-// 1. Remove stop words
-// 2. Print the list of unique words in alphabetical order
