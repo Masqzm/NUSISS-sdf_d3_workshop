@@ -18,6 +18,8 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Suit: %s, Name: %s, Value: %d".formatted(this.suit, this.name, this.value);
+        return  "Suit: " + this.suit + 
+                " | Name: " + this.name +
+                " | Value: " + this.value;
     }
 }

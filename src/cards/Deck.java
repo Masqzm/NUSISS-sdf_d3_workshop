@@ -1,11 +1,15 @@
 package cards;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Deck {
     public static final String[] SUIT = {
         "Spade", "Club", "Hearts", "Diamond"
     };
     public static final String[] NAMES = {
-        "A", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", 
+        "Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", 
         "Nine", "Ten", "Jack", "Queen", "King"
     };
     public static final int[] VALUES = {
@@ -13,40 +17,46 @@ public class Deck {
         9, 10, 10, 10, 10
     };
 
-    protected Card[] cards;
+    protected List<Card> cards = new ArrayList<>();    // btm of deck = 0; top of deck = cards.size()-1
 
     public Deck() {
-        int idx = 0;    // to keep track of card index
-        cards = new Card[52];
+        Initialise();
+    }
 
+    public int getSize() {
+        return this.cards.size();
+    }
+
+    private void Initialise() {
+        cards.clear();
         for(int s = 0; s < SUIT.length; s++) {
             String suit = SUIT[s];
 
             for(int n = 0; n < NAMES.length; n++) {
                 String name = NAMES[n];
                 int value = VALUES[n];
-
+                
+                // Assign new card its unique attributes
                 Card card = new Card(suit, name, value);
-                cards[idx] = card;
-                ++idx;
+                cards.add(card);
             }
         }
-        
-    }
-
-    public Card get() {
-        return this.get(0);
-    }
-    public Card get(int pos) {
-        return this.cards[pos];
     }
 
     public void Shuffle() {
-        
+        Collections.shuffle(this.cards);
+    }
+
+    public Card get(int pos) {
+        return this.cards.get(pos);
+    }
+
+    public Card getTop() {
+        return get(this.cards.size() - 1);
     }
 
     @Override
     public String toString() {
-        return "Number of cards: %d".formatted(cards.length);
+        return "Number of cards: " + cards.size() + "\n";
     }
 }
